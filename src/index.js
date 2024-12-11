@@ -3,7 +3,6 @@ import { StatusCodes } from "http-status-codes";
 
 import connectDB from "./config/dbConfig.js";
 import { PORT } from "./config/serverConfig.js";
-
 import apiRouter from "./routes/apiRouter.js";
 
 const app = express();

@@ -1,12 +1,10 @@
-
 import express from "express";
-import { StatusCodes } from "http-status-codes";
+
+import { signUp } from "../../controllers/userController.js";
+import { userSignupSchema } from "../../validators/userSchema.js";
+import { validate } from "../../validators/zodValidator.js";
 const router = express.Router();
 
-router.get("/", (req,res)=>{
-    return res.status(StatusCodes.OK).json({
-        data:"user data"
-    })
-});
+router.post("/signup", validate(userSignupSchema), signUp);
 
 export default router;
