@@ -8,7 +8,7 @@ export const validate = (schema) => {
       await schema.parseAsync(req.body);
       next();
     } catch (error) {
-      console.log(error.errors);
+      console.log(error);
       const explaination = [];
       error.errors.forEach((key) => {
         explaination.push(key.message);
