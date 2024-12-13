@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const workspaceSchema = mongoose.Schema({
+const workspaceSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Workspace name is required"],
