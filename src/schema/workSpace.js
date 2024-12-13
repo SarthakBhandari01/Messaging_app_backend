@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const workSpaceSchema = mongoose.Schema({
+const workspaceSchema = mongoose.Schema({
   name: {
     type: String,
     required: [true, "Workspace name is required"],
@@ -34,6 +34,6 @@ const workSpaceSchema = mongoose.Schema({
   ],
 });
 
-const Workspace = mongoose.model("Workspace", workSpaceSchema);
+const Workspace = mongoose.model("Workspace", workspaceSchema);
 
 export default Workspace;

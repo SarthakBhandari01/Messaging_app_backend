@@ -18,10 +18,10 @@ const messageSchema = new mongoose.Schema({
     ref: "User",
     required: [true, "sender id is required"],
   },
-  workSpaceId: {
+  workspaceId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Workspace",
-    required: [true, "WorkSpace id is required"],
+    required: [true, "Workspace id is required"],
   },
 });
 
