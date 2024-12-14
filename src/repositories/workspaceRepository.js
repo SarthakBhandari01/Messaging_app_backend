@@ -1,14 +1,16 @@
 import { StatusCodes } from "http-status-codes";
+
 import Workspace from "../schema/workspace.js";
 import ClientError from "../utils/errors/clientError.js";
+import channelRepository from "./channelRepository.js";
 import crudRepository from "./crudRepository.js";
 import userRepository from "./userRepository.js";
-import channelRepository from "./channelRepository.js";
 
 const workspaceRepository = {
   ...crudRepository(Workspace),
   getWorkspaceByName: async function (workspaceName) {
     const workspace = await Workspace.findOne({ name: workspaceName });
+
     if (!workspace) {
       throw new ClientError({
         message: "Workspace not found",
@@ -16,6 +18,7 @@ const workspaceRepository = {
         statusCode: StatusCodes.NOT_FOUND,
       });
     }
+
     return workspace;
   },
   getWorkspaceByJoinCode: async function (joinCode) {
@@ -59,7 +62,7 @@ const workspaceRepository = {
         statusCode: StatusCodes.FORBIDDEN,
       });
     }
-
+    
     workspace.members.push({ memberId, role });
 
     await workspace.save();

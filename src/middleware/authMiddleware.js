@@ -1,12 +1,11 @@
 import { StatusCodes } from "http-status-codes";
 
+import userRepository from "../repositories/userRepository.js";
+import { verifyToken } from "../utils/common/generateToken.js";
 import {
   customErrorResponse,
   internalErrorResponse,
 } from "../utils/common/responseObject.js";
-import { verifyToken } from "../utils/common/generateToken.js";
-import userRepository from "../repositories/userRepository.js";
-import userRepository from "../repositories/userRepository.js";
 
 export const isAuthenticated = async (req, res, next) => {
   try {
@@ -24,8 +23,8 @@ export const isAuthenticated = async (req, res, next) => {
 
     const response = verifyToken(token);
 
-    const doesUserExist = await userRepository.getById(response._id);
-    req.user = response;
+    const user = await userRepository.getById(response._id);
+    req.user = user._id;
     next();
   } catch (error) {
     if (error.name === "JsonWebTokenError") {
