@@ -24,7 +24,7 @@ export const isAuthenticated = async (req, res, next) => {
     const response = verifyToken(token);
 
     const user = await userRepository.getById(response._id);
-    req.user = user._id;
+    req.user = user.id;
     next();
   } catch (error) {
     if (error.name === "JsonWebTokenError") {

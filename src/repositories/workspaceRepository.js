@@ -10,7 +10,6 @@ const workspaceRepository = {
   ...crudRepository(Workspace),
   getWorkspaceByName: async function (workspaceName) {
     const workspace = await Workspace.findOne({ name: workspaceName });
-
     if (!workspace) {
       throw new ClientError({
         message: "Workspace not found",
@@ -62,7 +61,7 @@ const workspaceRepository = {
         statusCode: StatusCodes.FORBIDDEN,
       });
     }
-    
+
     workspace.members.push({ memberId, role });
 
     await workspace.save();
@@ -102,7 +101,6 @@ const workspaceRepository = {
     const workspaces = await Workspace.find({
       "members.memberId": memberId,
     }).populate("members.memberId", "username email avatar");
-
     return workspaces;
   },
 };
