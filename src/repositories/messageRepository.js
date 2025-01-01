@@ -14,6 +14,13 @@ const messageRepository = {
 
     return messages;
   },
+  getMessageDetails: async (messageId) => {
+    const message = await Message.findById(messageId).populate(
+      "senderId",
+      "username email avatar"
+    );
+    return message;
+  },
 };
 
 export default messageRepository;

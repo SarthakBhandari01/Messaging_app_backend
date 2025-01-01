@@ -32,3 +32,11 @@ export const getMessagesService = async (messageParams, page, limit, user) => {
     throw error;
   }
 };
+
+export const createMessageService = async (data) => {
+  const newMessage = await messageRepository.create(data);
+  const messageDetails = await messageRepository.getMessageDetails(
+    newMessage.id
+  );
+  return messageDetails;
+};
