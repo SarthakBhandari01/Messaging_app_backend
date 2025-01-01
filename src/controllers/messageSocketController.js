@@ -5,11 +5,13 @@ import {
 } from "../utils/common/eventConstant.js";
 
 export default function messageHandler(io, socket) {
-  socket.on(NEW_MESSAGE_EVENT, async function (data, cb) {
-    const messageResponse=await createMessageService(data);
-    socket.broadcast.emit(NEW_MESSAGE_RECEIVED_EVENT, messageResponse);
+  socket.on(NEW_MESSAGE_EVENT, async function createMessageHandler(data, cb) {
+    const room = data.channelId;
+    const messageResponse = await createMessageService(data);
+    io.to(room).emit(NEW_MESSAGE_RECEIVED_EVENT, messageResponse);
     cb({
-      status: "Data sent successfully",
+      success: true,
+      status: "Message sent successfully",
     });
   });
 }

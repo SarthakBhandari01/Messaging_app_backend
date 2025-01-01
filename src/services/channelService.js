@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 
 import channelRepository from "../repositories/channelRepository.js";
+import messageRepository from "../repositories/messageRepository.js";
 import ClientError from "../utils/errors/clientError.js";
 import { isUserMemberOfWorkspace } from "./workspaceService.js";
 
@@ -24,7 +25,13 @@ export const getChannelByIdService = async (channelId, userId) => {
         statusCode: StatusCodes.FORBIDDEN,
       });
     }
-    return channel;
+
+    const messages = await messageRepository.getPaginatedMessages(
+      { channelId },
+      1,
+      20
+    );
+    return { ...channel._doc, messages };
   } catch (error) {
     console.log("Get channel by id Service error ", error);
     throw error;
