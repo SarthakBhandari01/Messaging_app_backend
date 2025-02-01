@@ -56,6 +56,7 @@ export const signInService = async (userDetails) => {
       username: user.username,
       avatar: user.avatar,
       email: user.email,
+      _id:user._id,
       token: generateToken({
         email: user.email,
         username: user.username,
