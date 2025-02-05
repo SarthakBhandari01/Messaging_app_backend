@@ -45,6 +45,9 @@ export const getAllWorkspacesUserIsMemberOf = async (req, res) => {
       );
   } catch (error) {
     console.log(error);
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(internalErrorResponse(error));
@@ -80,6 +83,7 @@ export const getWorkspace = async (req, res) => {
       .status(StatusCodes.OK)
       .json(successResponse(response, "Workspace fetched successfully"));
   } catch (error) {
+    console.log('Get workspace controller error', error);
     if (error.statusCode) {
       return res.status(error.statusCode).json(customErrorResponse(error));
     }
