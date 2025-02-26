@@ -8,14 +8,18 @@ import validationError from "../utils/errors/validationError.js";
 
 export const isUserAdminOfWorkspace = (workspace, userId) => {
   const response = workspace.members.find((member) => {
-    return member.memberId.toString() === userId && member.role === "admin";
+    return (
+      (member.memberId.toString() === userId ||
+        member.memberId._id.toString() === userId) &&
+      member.role === "admin"
+    );
   });
   return response;
 };
 
 export const isUserMemberOfWorkspace = (workspace, userId) => {
   const response = workspace.members.find((member) => {
-    return member.memberId.toString() === userId;
+    return member.memberId._id.toString() === userId;
   });
   return response;
 };
@@ -106,7 +110,9 @@ export const deleteWorkspaceService = async (workspaceId, userId) => {
 
 export const getWorkspaceService = async (workspaceId, userId) => {
   try {
-    const workspace = await workspaceRepository.getById(workspaceId);
+    const workspace = await workspaceRepository.getWorkspaceDetailsById(
+      workspaceId
+    );
     if (!workspace) {
       throw new ClientError({
         message: "Workspace not found",
