@@ -8,6 +8,7 @@ import {
   getAllWorkspacesUserIsMemberOf,
   getWorkspace,
   getWorkspaceByJoinCode,
+  joinWorkspaceController,
   resetJoinCodeController,
   updateWorkspace,
 } from "../../controllers/workspaceController.js";
@@ -21,6 +22,7 @@ import { validate } from "../../validators/zodValidator.js";
 
 const router = express.Router();
 
+router.put("/:workspaceId/join", isAuthenticated, joinWorkspaceController);
 router.post("/", validate(workspaceSchema), isAuthenticated, createWorkspace);
 router.get("/", isAuthenticated, getAllWorkspacesUserIsMemberOf);
 router.delete("/:workspaceId", isAuthenticated, deleteWorkspace);
