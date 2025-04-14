@@ -12,7 +12,11 @@ import apiRouter from "./routes/apiRouter.js";
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 
 app.use(cors());
 app.use(express.json());
@@ -27,7 +31,6 @@ app.get("/ping", (req, res) => {
 app.use("/api", apiRouter); //if the url starts with "/api" then the request is forwarded to apiRouter.
 
 io.on("connection", (socket) => {
-  console.log("a user connected ", socket.id);
   messageHandler(io, socket);
   channelHandler(io, socket);
 });
