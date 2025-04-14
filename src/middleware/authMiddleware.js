@@ -27,7 +27,10 @@ export const isAuthenticated = async (req, res, next) => {
     req.user = user.id;
     next();
   } catch (error) {
-    if (error.name === "JsonWebTokenError") {
+    if (
+      error.name === "JsonWebTokenError" ||
+      error.name === "TokenExpiredError"
+    ) {
       return res.status(StatusCodes.FORBIDDEN).json(
         customErrorResponse({
           message: "Invalid auth token provided",
